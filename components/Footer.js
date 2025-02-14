@@ -1,50 +1,87 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Linking,
+  StyleSheet,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { t } from "i18next";
+import { useTheme } from "@react-navigation/native";
 
 const Footer = () => {
-  const [language, setLanguage] = useState("vi");
-
-  const toggleLanguage = () => {
-    setLanguage(language === "vi" ? "en" : "vi");
-  };
+  const { colors } = useTheme();
 
   return (
-    <View style={styles.footer}>
-      <Text style={styles.contact}>
-        {language === "vi"
-          ? "Liên hệ: contact@example.com"
-          : "Contact: contact@example.com"}
-      </Text>
-      <View style={styles.icons}>
-        <FontAwesome name="facebook" size={24} color="#3b5998" />
-        <FontAwesome name="twitter" size={24} color="#00acee" />
-        <FontAwesome name="instagram" size={24} color="#C13584" />
+    <View style={[styles.footer, { backgroundColor: colors.background }]}>
+      <View style={styles.contactContainer}>
+        <FontAwesome name="envelope" size={20} color={colors.primary} />
+        <Text style={[styles.contactText, { color: colors.primary }]}>
+          luanthanhnguyen404@gmail.com
+        </Text>
       </View>
-      <Text style={styles.policy}>
-        {language === "vi"
-          ? "Chính sách bảo mật | Điều khoản sử dụng"
-          : "Privacy Policy | Terms of Use"}
+      <View style={styles.contactContainer}>
+        <FontAwesome name="phone" size={20} color={colors.primary} />
+        <Text style={[styles.contactText, { color: colors.primary }]}>
+          0961819210 •{" "}
+        </Text>
+        <FontAwesome name="globe" size={20} color={colors.primary} />
+        <TouchableOpacity
+          onPress={() => Linking.openURL("https://thanhluan.tech")}
+        >
+          <Text style={[styles.contactText, { color: colors.primary }]}>
+            thanhluan.tech
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.icons}>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL("https://www.facebook.com/luaan.thanhf")
+          }
+        >
+          <FontAwesome name="facebook" size={24} color="#1186ed" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Linking.openURL("https://github.com/3Luan")}
+        >
+          <FontAwesome name="github" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL("https://www.instagram.com/luaan.thanhf")
+          }
+        >
+          <FontAwesome name="instagram" size={24} color="#ff08c3" />
+        </TouchableOpacity>
+      </View>
+      <Text style={[styles.policy, { color: colors.primary }]}>
+        {t("footer.policy")}
       </Text>
-      <TouchableOpacity onPress={toggleLanguage} style={styles.button}>
-        <Text>{language === "vi" ? "English" : "Tiếng Việt"}</Text>
-      </TouchableOpacity>
-      <Text style={styles.copy}>© 2025 STAR GLOBAL TEST</Text>
+      <Text style={[styles.copy, { color: colors.primary }]}>
+        {t("footer.copyright")}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  footer: { padding: 20, backgroundColor: "#eee", alignItems: "center" },
-  contact: { marginBottom: 10 },
-  icons: { flexDirection: "row", gap: 15, marginBottom: 10 },
-  policy: { marginBottom: 10 },
-  button: {
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: "#ccc",
+  footer: {
+    marginTop: 20,
+    padding: 20,
+    backgroundColor: "#eee",
+    alignItems: "center",
     borderRadius: 5,
   },
+  contactContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  contactText: { marginLeft: 8 },
+  icons: { flexDirection: "row", gap: 15, marginBottom: 10 },
+  policy: { marginBottom: 10 },
   copy: { fontSize: 12, color: "#777" },
 });
 

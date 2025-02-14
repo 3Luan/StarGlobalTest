@@ -1,9 +1,11 @@
 export default {
+  home: "Home",
+  about: "About",
+
   heroTitle: "CREATING REAL WORLD DIGITAL TWINS",
   heroDescription:
     "The only 3D digitization solution granted an exclusive patent by the US Patent Office.",
   startButton: "Explore",
-  welcome: "Welcome to STAR GLOBAL TEST",
   posts: [
     {
       title: "WEB/APP 3D/360 INTERACTIVE SERVICE",
@@ -23,4 +25,28 @@ export default {
   ],
   readMore: "Read more",
   showLess: "Show less",
+  form: {
+    namePlaceholder: "Full Name",
+    contentPlaceholder: "Content",
+    submitButton: "Submit",
+
+    info: "Information",
+    emailSelected: "Email selected:",
+    emailRequired: "Please select an email address",
+    nameRequired: "Please enter your name",
+    contentRequired: "Please enter content",
+    emailSubject: "Contact Form Submission",
+    emailSent: "Email sent successfully!",
+    emailNotSent: "Failed to send email.",
+    emailError: "An error occurred while sending the email.",
+    success: "Success",
+    error: "Error",
+  },
+  footer: {
+    contact: "Contact",
+    policy: "Privacy Policy | Terms of Use",
+    copyright: "© 2025 NGUYEN THANH LUAN",
+  },
+  aboutDescription:
+    "This application is developed by the STAR GLOBAL TEST team, aiming to provide the best experience for users. It allows creating a digital twin of the real world, helping you reach potential customers worldwide without spatial and time barriers. The product scans spaces to create panoramic images linked together, giving viewers the feeling of being present at the location in vivid 3D space. 3D object digitization is a service using professional 3D scanners to capture surface data and recreate objects as 3D models.",
 };

@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "./App.tsx",
     "name": "StarGlobalTest",
     "slug": "StarGlobalTest",
     "version": "1.0.0",

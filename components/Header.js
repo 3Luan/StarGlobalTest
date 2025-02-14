@@ -1,21 +1,27 @@
 import { setLocale } from "@/language";
 import { FontAwesome } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
-const Header = () => {
+const Header = ({ isDarkMode, setIsDarkMode }) => {
   const [language, setLanguage] = useState("vi");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { colors } = useTheme();
 
   const toggleLanguage = () => {
     setLocale(language === "vi" ? "vi" : "en");
     setLanguage(language === "vi" ? "en" : "vi");
   };
+
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
-    <View style={styles.headerContainer}>
-      <Text style={styles.headerTitle}>STAR GLOBAL</Text>
+    <View
+      style={[styles.headerContainer, { backgroundColor: colors.background }]}
+    >
+      <Text style={[styles.headerTitle, { color: colors.primary }]}>
+        STAR GLOBAL
+      </Text>
       <View style={styles.rightContainer}>
         <TouchableOpacity onPress={toggleTheme} style={{ marginRight: 16 }}>
           <FontAwesome
@@ -50,6 +56,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
+
   headerTitle: { fontSize: 24, fontWeight: "bold" },
   rightContainer: { flexDirection: "row", alignItems: "center" },
 });

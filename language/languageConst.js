@@ -1,4 +1,6 @@
 const I = {
+  HOME: "home",
+  ABOUT: "about",
   HEROTITLE: "heroTitle",
   HERODESCRIPTION: "heroDescription",
   STARTBUTTON: "startButton",
@@ -6,6 +8,7 @@ const I = {
   POSTS: "posts",
   READMORE: "readMore",
   SHOWLESS: "showLess",
+  ABOUTDESCRIPTION: "aboutDescription",
 };
 
 export default I;

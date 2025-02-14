@@ -9,10 +9,12 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 const Card = ({ item, onPress }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { t } = useTranslation();
+  const { colors } = useTheme();
 
   if (item.type === "hero") {
     return (
@@ -20,10 +22,16 @@ const Card = ({ item, onPress }) => {
         source={require("../assets/images/bg.png")}
         style={styles.hero}
       >
-        <Text style={styles.title}>{t(I.HEROTITLE)}</Text>
-        <Text style={styles.description}>{t(I.HERODESCRIPTION)}</Text>
+        <Text style={[styles.title, { color: colors.primary }]}>
+          {t(I.HEROTITLE)}
+        </Text>
+        <Text style={[styles.description, { color: colors.primary }]}>
+          {t(I.HERODESCRIPTION)}
+        </Text>
         <TouchableOpacity style={styles.button} onPress={() => null}>
-          <Text style={styles.buttonText}>{t(I.STARTBUTTON)}</Text>
+          <Text style={[styles.buttonText, { color: colors.primary }]}>
+            {t(I.STARTBUTTON)}
+          </Text>
         </TouchableOpacity>
       </ImageBackground>
     );
@@ -32,8 +40,10 @@ const Card = ({ item, onPress }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={() => onPress(item)}>
       <Image source={item.image} style={styles.cardImage} />
-      <Text style={styles.cardTitle}>{item.title}</Text>
-      <Text style={styles.cardDescription}>
+      <Text style={[styles.cardTitle, { color: colors.primary }]}>
+        {item.title}
+      </Text>
+      <Text style={[styles.cardDescription, { color: colors.primary }]}>
         {showFullDescription
           ? item.description
           : `${item.description.slice(0, 100)}... `}
@@ -68,13 +78,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#84c700",
     marginBottom: 10,
   },
   description: {
     fontSize: 14,
     fontWeight: "bold",
-    // color: "#fff",
     marginBottom: 20,
     textAlign: "center",
     paddingHorizontal: 20,
@@ -85,11 +93,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
   },
-  buttonText: { color: "#fff", fontSize: 16 },
+  buttonText: { fontSize: 16 },
   card: {
     padding: 15,
     margin: 10,
-    backgroundColor: "#fff",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOpacity: 0.1,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -13,9 +13,16 @@ import Card from "../../components/Card";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import I from "../../language/languageConst";
+import { useTheme } from "@react-navigation/native";
+import * as MailComposer from "expo-mail-composer";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  const { colors } = useTheme();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [content, setContent] = useState("");
 
   const articles = [
     {
@@ -51,12 +58,49 @@ export default function HomeScreen() {
     });
   };
 
-  const handleSubmit = () => {
-    // Alert.alert("Thông báo", "Form đã được gửi thành công!");
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSubmit = async () => {
+    if (!name.trim()) {
+      Alert.alert(t("form.info"), t("form.nameRequired"));
+      return;
+    }
+    if (!email.trim()) {
+      Alert.alert(t("form.info"), t("form.emailRequired"));
+      return;
+    }
+    if (!validateEmail(email)) {
+      Alert.alert(t("form.info"), t("form.emailSelected"));
+      return;
+    }
+    if (!content.trim()) {
+      Alert.alert(t("form.info"), t("form.contentRequired"));
+      return;
+    }
+
+    const options = {
+      recipients: ["luanthanhnguyen404@gmail.com"],
+      subject: "",
+      body: `Name: ${name}\nEmail: ${email}\nContent: ${content}`,
+    };
+
+    try {
+      const result = await MailComposer.composeAsync(options);
+      if (result.status === "sent") {
+        Alert.alert(t("form.success"), t("form.emailSent"));
+      } else {
+        Alert.alert(t("form.error"), t("form.emailNotSent"));
+      }
+    } catch (error) {
+      Alert.alert(t("form.error"), t("form.emailNotSent"));
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={articles}
         renderItem={({ item }) => (
@@ -65,23 +109,37 @@ export default function HomeScreen() {
         keyExtractor={(item) => item.id}
         ListFooterComponent={
           <View style={styles.formContainer}>
-            <TextInput placeholder="Họ tên" style={styles.input} />
             <TextInput
-              placeholder="Email"
-              style={styles.input}
-              keyboardType="email-address"
+              placeholder={t("form.namePlaceholder")}
+              placeholderTextColor={colors.primary}
+              style={[styles.input, { color: colors.primary }]}
+              value={name}
+              onChangeText={setName}
             />
             <TextInput
-              placeholder="Nội dung"
-              style={styles.textArea}
+              placeholder="Email"
+              placeholderTextColor={colors.primary}
+              style={[styles.input, { color: colors.primary }]}
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              placeholder={t("form.contentPlaceholder")}
+              placeholderTextColor={colors.primary}
+              style={[styles.textArea, { color: colors.primary }]}
               multiline
               numberOfLines={4}
+              value={content}
+              onChangeText={setContent}
             />
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
             >
-              <Text style={styles.submitButtonText}>{t(I.WELCOME)}</Text>
+              <Text style={styles.submitButtonText}>
+                {t("form.submitButton")}
+              </Text>
             </TouchableOpacity>
             <Footer />
           </View>
@@ -93,18 +151,17 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
-
   formContainer: { padding: 20 },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "gray",
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
   },
   textArea: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "gray",
     padding: 10,
     height: 100,
     marginBottom: 10,
