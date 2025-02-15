@@ -7,23 +7,37 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@react-navigation/native";
 
 const PostDetailsScreen = () => {
   const { article } = useLocalSearchParams();
   const parsedArticle = JSON.parse(article);
-
+  const { t } = useTranslation();
+  const { colors } = useTheme();
   return (
     <>
       <StatusBar barStyle="dark-content" hidden={false} />
 
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>Chi tiết bài viết</Text>
+      <View
+        style={[styles.headerContainer, { backgroundColor: colors.background }]}
+      >
+        <Text style={[styles.headerTitle, { color: colors.primary }]}>
+          Chi tiết bài viết
+        </Text>
       </View>
 
       <TouchableOpacity style={styles.card}>
-        <Image source={parsedArticle.image} style={styles.cardImage} />
-        <Text style={styles.cardTitle}>{parsedArticle.title}</Text>
-        <Text style={styles.cardDescription}>{parsedArticle.description}</Text>
+        <Image
+          source={parsedArticle.image}
+          style={[styles.cardImage, { backgroundColor: colors.background }]}
+        />
+        <Text style={[styles.cardTitle, { color: colors.primary }]}>
+          {parsedArticle.title}
+        </Text>
+        <Text style={[styles.cardDescription, { color: colors.primary }]}>
+          {parsedArticle.description}
+        </Text>
       </TouchableOpacity>
     </>
   );
@@ -45,7 +59,6 @@ const styles = StyleSheet.create({
 
   card: {
     margin: 10,
-    backgroundColor: "#f9f9f9",
     borderRadius: 8,
     padding: 10,
   },

@@ -19,9 +19,15 @@ const Header = ({ isDarkMode, setIsDarkMode }) => {
     <View
       style={[styles.headerContainer, { backgroundColor: colors.background }]}
     >
-      <Text style={[styles.headerTitle, { color: colors.primary }]}>
-        STAR GLOBAL
-      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Image
+          source={require("../assets/images/logo.png")}
+          style={{ width: 32, height: 32, marginRight: 8 }}
+        />
+        <Text style={[styles.headerTitle, { color: colors.primary }]}>
+          STAR GLOBAL
+        </Text>
+      </View>
       <View style={styles.rightContainer}>
         <TouchableOpacity onPress={toggleTheme} style={{ marginRight: 16 }}>
           <FontAwesome
@@ -54,7 +60,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#fff",
   },
 
   headerTitle: { fontSize: 24, fontWeight: "bold" },
